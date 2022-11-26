@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+int rows;
+int columns;
+
+
+
+
+
+int cheka(int r, int c, int queens[columns][2]){
+    for(int i = 0; i < columns; i++){
+        if(queens[i][0] != -1){
+            if(queens[i][0] == r)
+                return 0;
+            if(queens[i][1] == c)
+                return 0;
+            if(abs(r - queens[i][0]) == abs(c - queens[i][1]))
+                return 0;
+        }
+
+    }
+    return 1;
+}
+
+void check(int c, int Tabsize[rows][columns], int queens[columns][2]){
+    if(c == columns){
+         for(int i = 0; i < rows; i++){
+            for(int j = 0;j < columns; j++){
+                printf("%d ",Tabsize[i][j]);
+            }
+            printf("\n");
+        }
+        printf("stopppp::::or no ;)\n\n\n\n\n");
+    }
+    else{
+        for(int r = 0; r < rows; r++){
+            if(cheka(r,c,queens)){
+                Tabsize[r][c] = 1;
+                queens[c][0] = r;
+                queens[c][1] = c;
+                check(c+1,Tabsize,queens);
+                Tabsize[r][c] = 0;
+                queens[c][0] = -1;
+                queens[c][1] = -1;
+            }
+        }
+    }
+}
+
+int main(){
+
+    printf("rows and columns: ");
+    scanf("%d %d",&rows,&columns);
+
+    int Tabsize[rows][columns];
+    int queens[columns][2];
+
+    for(int i = 0; i < rows; i++){
+        for(int j = 0;j < columns; j++){
+            Tabsize[i][j] = 0;
+        }
+    }
+
+
+
+
+
+    for(int i = 0; i < columns; i++){
+        for(int j = 0; j < 2; j++){
+            queens[i][j] = -1;
+        }
+    }
+
+    check(0,Tabsize,queens);
+
+    return 0;
+}
